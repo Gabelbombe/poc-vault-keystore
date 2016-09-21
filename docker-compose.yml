@@ -1,0 +1,23 @@
+vault:
+  image: voxxit/vault:latest
+  volumes:
+    - ./vault.hcl:/etc/vault.hcl
+  links:
+    - "consul:consul"
+    - "mysql:mysql"
+  ports:
+    - 8200:8200
+  command: "server -config=/etc/vault.hcl"
+
+mysql:
+  image: mysql:latest
+  environment:
+    - "MYSQL_ROOT_PASSWORD=secret"
+
+consul:
+  image: voxxit/consul:latest
+  ports:
+    - 80:8500
+  volumes:
+    - ./consul.json:/etc/consul.json
+command: "agent -config-file=/etc/consul.json"
