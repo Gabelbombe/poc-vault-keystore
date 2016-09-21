@@ -1,5 +1,5 @@
 ```
-git clone https://gist.github.com/dd6f95398c1bdc9f1038.git vault
+git clone https://github.com/ehime/poc-vault-keystore.git vault
 cd vault
 docker-compose up -d
 export VAULT_ADDR=http://192.168.99.100:8200
