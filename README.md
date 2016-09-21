@@ -1,3 +1,16 @@
+#### Consul + Vault + ???? = <3
+
+##### The business reason for this:
+
+While trying to come up with a storage solution it dawned on me "Couldn't we simply create a tiny Vault container which has port 8200 mapped to 172.17.42.1 (Docker's internal gateway IP for containers)?"" Running it, using `--memory-swap=-1` to prevent memory from swapping to disk:
+
+    docker run -d -p 172.17.42.1:8200:8200 --name vault --memory-swap=-1 vault server -dev
+
+Obviously, this runs the development server by default, and probably not the best way to store your secrets using the "inmem" backend. So, you could then use `--volumes-from` and store things in a data volume container for the "file" backend and configuration, or simply use `--link` to link to a running Consul container, postgres, mysql, you name it.
+
+The possibilities are endless.
+
+
 ```
 git clone https://github.com/ehime/poc-vault-keystore.git vault
 cd vault
